@@ -46,7 +46,11 @@
                         <tr>
                             <td>{{ $warehouse->id }}</td>
                             <td>{{ $warehouse->address }}</td>
-                            <td>{{ $warehouse->supplier->name ?? 'none'}}</td>
+                            <td>
+                                @foreach($warehouse->suppliers as $supplier)
+                                    {{ $supplier->name }} <br />
+                                @endforeach
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

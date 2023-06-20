@@ -10,7 +10,7 @@
                 <label for="suppliers">Dodavatel:</label>
                 <select class="form-control" id="suppliers" name="suppliers[]" multiple required>
                     @foreach ($suppliers as $supplier)
-                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                        <option value="{{ $supplier->id }} {{ in_array($supplier->id, $warehouse->suppliers->pluck('supplier_id')->toArray()) ? 'selected' : '' }}">{{ $supplier->name }}</option>
                     @endforeach
                 </select>
             </div>

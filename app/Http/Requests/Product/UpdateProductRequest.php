@@ -26,7 +26,7 @@ class UpdateProductRequest extends FormRequest
             'price' => 'required|numeric',
             'qty' => 'required|numeric',
             'supplier_id' => 'required|exists:suppliers,id',
-            'warehouse_id' => 'required|exists:warehouse,id',
+            'warehouses' => 'required|exists:warehouse,id',
         ];
     }
 }

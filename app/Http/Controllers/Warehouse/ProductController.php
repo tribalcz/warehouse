@@ -29,8 +29,9 @@ class ProductController extends Controller
         $validatedData = $request->validated();
 
         $product = Product::create($validatedData);
+        $product->warehouses()->sync($request->input('warehouses', []));
 
-        return redirect()->route('product.index')->with('success', 'Produkt byl úspěšně vytvořen.');
+        return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně vytvořen.');
     }
 
     public function edit(Product $product)
@@ -45,14 +46,15 @@ class ProductController extends Controller
         $validatedData = $request->validated();
 
         $product->update($validatedData);
+        $product->warehouses()->sync($request->input('warehouses', []));
 
-        return redirect()->route('product.index')->with('success', 'Produkt byl úspěšně upraven.');
+        return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně upraven.');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return redirect()->route('product.index')->with('success', 'Produkt byl úspěšně smazán.');
+        return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně smazán.');
     }
 }

@@ -24,8 +24,9 @@ class CreateProductRequest extends FormRequest
         return [
             'name' => 'required|unique:products',
             'price' => 'required|numeric',
+            'qty' => 'required|numeric',
             'supplier_id' => 'required|exists:suppliers,id',
-            'warehouse_id' => 'required|exists:warehouses,id',
+            'warehouses' => 'required|exists:warehouse,id',
         ];
     }
 }

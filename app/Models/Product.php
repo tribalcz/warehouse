@@ -17,8 +17,13 @@ class Product extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    public function warehouse()
+    public function warehouses()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsToMany(Warehouse::class, 'product_warehouse');
+    }
+
+    public function getAvailableWarehouses()
+    {
+        return $this->warehouses()->get();
     }
 }

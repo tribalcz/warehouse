@@ -13,7 +13,7 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal">{{ env('APP_NAME') }}</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Hlavní stránka</a>
+        <a class="p-2 text-dark" href="{{ route('dashboard') }}">Hlavní stránka</a>
         <a class="p-2 text-dark" href="{{ route('products.index') }}">Přehled produktů</a>
         <a class="p-2 text-dark" href="{{ route('suppliers.index') }}">Přehled dodavatelů</a>
         <a class="p-2 text-dark" href="{{ route('warehouses.index') }}">Přehled skladů</a>
@@ -30,6 +30,12 @@
             </ul>
         </div>
     @endif
+
+        @if(Session::has('error'))
+            <div class="alert alert-danger mb-4">
+                {{ Session::get('error')}}
+            </div>
+        @endif
 
     @yield('content')
 

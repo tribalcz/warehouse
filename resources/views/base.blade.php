@@ -14,7 +14,7 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">{{ env('APP_NAME') }}</h5>
     <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="#">Hlavní stránka</a>
-        <a class="p-2 text-dark" href="{{ route('product.index') }}">Přehled produktů</a>
+        <a class="p-2 text-dark" href="{{ route('products.index') }}">Přehled produktů</a>
         <a class="p-2 text-dark" href="{{ route('suppliers.index') }}">Přehled dodavatelů</a>
         <a class="p-2 text-dark" href="{{ route('warehouses.index') }}">Přehled skladů</a>
     </nav>

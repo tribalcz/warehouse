@@ -27,11 +27,9 @@ class WarehouseController extends Controller
     {
         $validatedData = $request->validated();
 
-        $warehouse = Warehouse::create([
-            'address' => $validatedData['address'],
-        ]);
+        $warehouse = Warehouse::create($validatedData);
 
-        $warehouse->suppliers()->sync($validatedData['suppliers']);
+        $warehouse->suppliers()->sync($request->input('suppliers', []));
 
         return redirect()->route('warehouses.index')->with('success', 'Sklad byl úspěšně vytvořen.');
     }
@@ -48,11 +46,9 @@ class WarehouseController extends Controller
     {
         $validatedData = $request->validated();
 
-        $warehouse->update([
-            'address' => $validatedData['address']
-        ]);
+        $warehouse->update($validatedData);
 
-        $warehouse->suppliers()->sync($validatedData['suppliers']);
+        $warehouse->suppliers()->sync($request->input('suppliers', []));
 
         return redirect()->route('warehouses.index')->with('success', 'Sklad byl úspěšně upraven.');
     }

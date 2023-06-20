@@ -22,7 +22,7 @@ class CreateWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'supplier_id' => 'required',
+            'suppliers' => 'required',
             'address' => 'required',
         ];
     }

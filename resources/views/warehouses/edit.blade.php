@@ -7,10 +7,10 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="supplier_id">Dodavatel:</label>
-                <select class="form-control" id="supplier_id" name="supplier_id" required>
+                <label for="suppliers">Dodavatel:</label>
+                <select class="form-control" id="suppliers" name="suppliers[]" multiple required>
                     @foreach ($suppliers as $supplier)
-                        <option value="{{ $supplier->id }}" {{ $warehouse->supplier_id == $supplier->id ? 'selected' : '' }}>{{ $supplier->name }}</option>
+                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                     @endforeach
                 </select>
             </div>

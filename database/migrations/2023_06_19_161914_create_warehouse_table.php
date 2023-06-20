@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('warehouse', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('supplier_id');
             $table->string('address');
             $table->timestamps();
             $table->softDeletes();

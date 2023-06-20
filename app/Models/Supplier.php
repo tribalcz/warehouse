@@ -14,7 +14,7 @@ class Supplier extends Model
 
     public function warehouses()
     {
-        return $this->hasMany(Warehouse::class);
+        return $this->belongsToMany(Warehouse::class, 'warehouse_supplier');
     }
 
     public function products()

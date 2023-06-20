@@ -12,7 +12,7 @@ class WarehouseController extends Controller
 {
     public function index()
     {
-        $warehouses = Warehouse::paginate(10);
+        $warehouses = Warehouse::with('suppliers')->paginate(10);
         return view('warehouses.index', compact('warehouses'));
     }
 
@@ -27,13 +27,18 @@ class WarehouseController extends Controller
     {
         $validatedData = $request->validated();
 
-        $warehouse = Warehouse::create($validatedData);
+        $warehouse = Warehouse::create([
+            'address' => $validatedData['address'],
+        ]);
+
+        $warehouse->suppliers()->sync($validatedData['suppliers']);
 
         return redirect()->route('warehouses.index')->with('success', 'Sklad byl úspěšně vytvořen.');
     }
 
-    public function edit(Warehouse $warehouse)
+    public function edit($id)
     {
+        $warehouse = Warehouse::findOrFail($id);
         $suppliers = Supplier::select('id', 'name')->get();
 
         return view('warehouses.edit', compact('warehouse', 'suppliers'));
@@ -43,7 +48,11 @@ class WarehouseController extends Controller
     {
         $validatedData = $request->validated();
 
-        $warehouse->update($validatedData);
+        $warehouse->update([
+            'address' => $validatedData['address']
+        ]);
+
+        $warehouse->suppliers()->sync($validatedData['suppliers']);
 
         return redirect()->route('warehouses.index')->with('success', 'Sklad byl úspěšně upraven.');
     }

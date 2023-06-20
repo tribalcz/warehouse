@@ -10,7 +10,7 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Dodavatel</th>
+                <th>Dodavatelé</th>
                 <th>Adresa</th>
                 <th>Akce</th>
             </tr>
@@ -19,7 +19,11 @@
             @foreach ($warehouses as $warehouse)
                 <tr>
                     <td>{{ $warehouse->id }}</td>
-                    <td>{{ $warehouse->supplier->name ?? 'Tento sklad nemá dodavatele'}}</td>
+                    <td>
+                        @foreach($warehouse->suppliers as $supplier)
+                            {{ $supplier->name }} <br />
+                        @endforeach
+                    </td>
                     <td>{{ $warehouse->address }}</td>
                     <td>
                         <a href="{{ route('warehouses.edit', $warehouse->id) }}" class="btn btn-sm btn-primary">

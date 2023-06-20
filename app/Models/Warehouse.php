@@ -13,9 +13,9 @@ class Warehouse extends Model
     protected $table = 'warehouse';
     protected $fillable = ['supplier_id', 'address'];
 
-    public function supplier()
+    public function suppliers()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsToMany(Supplier::class, 'warehouse_supplier');
     }
 
     public function products()

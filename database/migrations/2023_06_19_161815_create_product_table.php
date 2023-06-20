@@ -17,7 +17,6 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('qty');
             $table->unsignedBigInteger('supplier_id');
-            $table->unsignedBigInteger('warehouse_id');
             $table->timestamps();
             $table->softDeletes();
         });

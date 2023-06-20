@@ -20,7 +20,7 @@ Route::get('/', [\App\Http\Controllers\Administration\DashboardController::class
 Route::prefix('products')->group(function () {
     Route::get('/', [\App\Http\Controllers\Warehouse\ProductController::class, 'index'])->name('products.index');
     // Zobrazení formuláře pro vytvoření produktu
-    Route::get('/create', [\App\Http\Controllers\Warehouse\ProductController::class, 'create'])->name('products.create');
+    Route::get('/create', [\App\Http\Controllers\Warehouse\ProductController::class, 'create'])->name('products.create')->middleware('check.dependencies');
     // Vytvoření nového produktu
     Route::post('/', [\App\Http\Controllers\Warehouse\ProductController::class, 'store'])->name('products.store');
     // Zobrazení formuláře pro úpravu produktu
@@ -50,7 +50,7 @@ Route::prefix('suppliers')->group(function () {
 Route::prefix('warehouses')->group(function () {
     Route::get('/', [\App\Http\Controllers\Warehouse\WarehouseController::class, 'index'])->name('warehouses.index');
     // Zobrazení formuláře pro vytvoření skladu
-    Route::get('/create', [\App\Http\Controllers\Warehouse\WarehouseController::class, 'create'])->name('warehouses.create');
+    Route::get('/create', [\App\Http\Controllers\Warehouse\WarehouseController::class, 'create'])->name('warehouses.create')->middleware('check.dependencies');
     // Vytvoření nového skladu
     Route::post('/', [\App\Http\Controllers\Warehouse\WarehouseController::class, 'store'])->name('warehouses.store');
     // Zobrazení formuláře pro úpravu skladu

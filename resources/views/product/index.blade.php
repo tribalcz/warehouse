@@ -25,7 +25,9 @@
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->qty ?? 0}}</td>
                     <td>
-                        <a class="p-2 text-dark" href="{{-- route('warehouse.detail') --}}">{{ $product->warehouse->address ?? 'Sklad nepřiřazen' }}</a>
+                        @foreach($product->getAvailableWarehouses() as $warehouse)
+                            {{ $warehouse->address }}
+                        @endforeach
                     </td>
                     <td>
                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">

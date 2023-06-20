@@ -26,8 +26,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="warehouse_id">Sklad:</label>
-                <select class="form-control" id="warehouse_id" name="warehouse_id" required>
+                <label for="warehouses">Sklad:</label>
+                <select class="form-control" id="warehouses" name="warehouses[]" multiple required>
                     @foreach ($warehouses as $warehouse)
                         <option value="{{ $warehouse->id }}">{{ $warehouse->address }}</option>
                     @endforeach

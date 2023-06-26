@@ -3,9 +3,11 @@
 @section('content')
     <div class="container">
         <h2>Seznam dodavatelů</h2>
-        <a href="{{ route('suppliers.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus"></i> Přidat dodavatele
-        </a>
+        @if(Route::has('suppliers.create'))
+            <a href="{{ route('suppliers.create') }}" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i> Přidat dodavatele
+            </a>
+        @endif
         <table class="table">
             <thead>
             <tr>

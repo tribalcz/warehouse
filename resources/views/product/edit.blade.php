@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2>Upravit produkt</h2>
+        <h2>Upravit produkt - {{$product->name}}</h2>
         <form action="{{ route('products.update', $product->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -11,8 +11,38 @@
                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ?: $product->name }}" required>
             </div>
             <div class="form-group">
+                <label for="url">Url:</label>
+                <input type="text" class="form-control" id="url" name="url" required minlength="10" maxlength="100" value="{{ old('url') ?: $product->url }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="content">Titulek prouktu:</label>
+                <textarea name="description" id="description" rows="2" class="form-control" required minlength="25" maxlength="255">{{ old('description') ?: $product->description}}</textarea>
+                <div id="character-counter">
+                    <span id="typed-characters">0</span>
+                    <span>/</span>
+                    <span id="maximum-characters">250</span>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="price">Cena:</label>
                 <input type="number" class="form-control" id="price" name="price" value="{{ old('price') ?: $product->price }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="weight">Váha(g):</label>
+                <input type="number" class="form-control" id="weight" name="weight" required step="any" value="{{ old('weight') ?: $product->weight }}">
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label for="code">Kód produktu:</label>
+                        <input type="number" class="form-control" id="code" name="code" required minlength="8" maxlength="13" value="{{ old('code') ?: $product->code }}" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="ean">EAN kód:</label>
+                        <input type="number" class="form-control" id="ean" name="ean" minlength="8" maxlength="14" value="{{ old('ean') ?: $product->ean }}">
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="qty">Skladovost:</label>
@@ -38,7 +68,52 @@
                     @endforeach
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Uložit</button>
+            <div class="form-group">
+                <label for="content">Popis produktu</label>
+                <textarea name="content" id="content" class="form-control" rows="8" minlength="255">{{ old('content') ?: $product->content }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Uložit</button>
         </form>
     </div>
 @endsection
+@push('scripts')
+    <script type="text/javascript" src="{{ asset('//cdn.tiny.cloud/1/4ca77c2b4xkblb863muluki6gqr14sx1p7lbrqasfyqroko6/tinymce/6/tinymce.min.js') }}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#content',
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            entities: '160,nbsp',
+            entity_encoding: 'raw',
+        });
+    </script>
+    <script type="text/javascript">
+        //Počítadlo znaků pro popisek produktu
+        const textAreaElement = document.querySelector("#description");
+        const characterCounterElement = document.querySelector("#character-counter");
+        const typedCharactersElement = document.querySelector("#typed-characters");
+        const maximumCharacters = 250;
+
+        textAreaElement.addEventListener("keydown", (event) => {
+            const typedCharacters = textAreaElement.value.length;
+
+            if (typedCharacters > maximumCharacters) {
+                return false;
+            }
+
+            typedCharactersElement.textContent = typedCharacters;
+
+            if (typedCharacters >= 200 && typedCharacters < 250) {
+                characterCounterElement.classList = "text-warning";
+            } else if (typedCharacters >= 250) {
+                characterCounterElement.classList = "text-danger";
+            }else if (typedCharacters < 250) {
+                characterCounterElement.classList = "text-dark";
+            }
+        });
+    </script>
+@endpush

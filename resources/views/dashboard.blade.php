@@ -25,7 +25,11 @@
                             <td>{{ $product->price }}</td>
                             <td>{{ $product->qty }}</td>
                             <td>{{ $product->supplier->name ?? 'none' }}</td>
-                            <td>{{ $product->warehouse->address ?? 'none' }}</td>
+                            <td>
+                                @foreach($product->warehouses as $warehouse)
+                                    {{ $warehouse->address }} <br />
+                                @endforeach
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('url')->unique();
+            $table->string('description');
+            $table->text('content');
+            $table->integer('code')->comment('Vlastní kód produktu');
+            $table->bigInteger('ean')->comment('EAN kód produktu')->nullable(true);
+            $table->float('weight');
             $table->decimal('price', 8, 2);
             $table->integer('qty');
             $table->unsignedBigInteger('supplier_id');

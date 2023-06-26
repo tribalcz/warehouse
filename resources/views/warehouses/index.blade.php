@@ -3,9 +3,11 @@
 @section('content')
     <div class="container">
         <h2>Seznam skladů</h2>
-        <a href="{{ route('warehouses.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus"></i> Přidat sklad
-        </a>
+        @if(Route::has('warehouses.create'))
+            <a href="{{ route('warehouses.create') }}" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i> Přidat sklad
+            </a>
+        @endif
         <table class="table">
             <thead>
             <tr>

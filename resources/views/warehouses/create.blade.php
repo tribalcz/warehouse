@@ -8,7 +8,6 @@
             <div class="form-group">
                 <label for="suppliers">Dodavatelé:</label>
                 <select class="form-control" id="suppliers" name="suppliers[]" multiple required>
-                    <option value="">Vyberte dodavatele</option>
                     @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                     @endforeach

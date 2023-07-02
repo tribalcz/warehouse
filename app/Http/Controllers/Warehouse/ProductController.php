@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Warehouse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\Warehouse;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -27,9 +29,25 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request)
     {
         $validatedData = $request->validated();
+        $databaseData = $validatedData;
+        unset($databaseData['images']);
 
-        $product = Product::create($validatedData);
+        //dd($request->file('images'));
+
+        $product = Product::create($databaseData);
         $product->warehouses()->sync($request->input('warehouses', []));
+
+        if ($request->hasFile('images')) {
+            $imageIds = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('product_images', 'public');
+                $imageModel = new Image();
+                $imageModel->path = $path;
+                $imageModel->save();
+                $imageIds[] = $imageModel->id;
+            }
+            $product->images()->sync($imageIds);
+        }
 
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně vytvořen.');
     }

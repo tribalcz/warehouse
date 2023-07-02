@@ -26,4 +26,19 @@ class Product extends Model
     {
         return $this->warehouses()->get();
     }
+
+    public function images()
+    {
+        return $this->belongsToMany(Image::class, 'product_image');
+    }
+
+    public function getNumberOfImages()
+    {
+        return $this->images()->count();
+    }
+
+    public function getImagesPaths()
+    {
+        return $this->images()->pluck('path');
+    }
 }

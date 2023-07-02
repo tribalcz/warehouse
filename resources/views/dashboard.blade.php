@@ -15,6 +15,8 @@
                         <th>Skladovost</th>
                         <th>Dodavatel</th>
                         <th>Sklad</th>
+                        <th>Počet obrázků</th>
+                        <th>Varianta</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,6 +31,16 @@
                                 @foreach($product->warehouses as $warehouse)
                                     {{ $warehouse->address }} <br />
                                 @endforeach
+                            </td>
+                            <td>
+                                @if($product->getNumberOfImages())
+                                {{ $product->getNumberOfImages() }}
+                                @endif
+                            </td>
+                            <td>
+                                @if($product->isVariant)
+                                    <i class="fas fa-check"></i>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->integer('qty');
             $table->unsignedBigInteger('supplier_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -69,6 +69,32 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně upraven.');
     }
 
+    public function createVariation($productId)
+    {
+        $product = Product::select('id','name', 'description', 'content', 'price', 'weight')->findOrFail($productId);
+        $product->title = $product->name;
+        unset($product->name);
+        unset($product->id);
+
+        $suppliers = Supplier::select('id', 'name')->get();
+        $warehouses = Warehouse::select('id', 'address')->get();
+
+        return view('product.variant', compact('product', 'suppliers', 'warehouses'));
+
+    }
+
+    public function storeVariant(CreateProductRequest $request)
+    {
+        $validatedData = $request->validated();
+
+        $validatedData['isVariant'] = 1;
+
+        $product = Product::create($validatedData);
+        $product->warehouses()->sync($request->input('warehouses', []));
+
+        return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně vytvořen.');
+    }
+
     public function destroy(Product $product)
     {
         try {

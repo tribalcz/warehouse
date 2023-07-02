@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Upravit produkt - {{$product->name}}</h2>
-        <form action="{{ route('products.update', $product->id) }}" method="POST">
+        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -69,6 +69,21 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="images">Obrázky produktu</label>
+                <input type="file" class="form-control" id="images" name="images[]" multiple>
+            </div>
+            <div class="form-group">
+                <label for="images">Obrázky produktu</label>
+                <div id="image-preview">
+                    @foreach($product->getImagesPaths() as $path)
+                        <div>
+                            <img src="{{ asset('storage/' . $path) }}" alt="Product Image" style="width: 100px; height: 100px;">
+                            <button type="button" class="btn btn-danger btn-sm remove-image" data-image="{{ $path }}">Odstranit</button><br />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="content">Popis produktu</label>
                 <textarea name="content" id="content" class="form-control" rows="8" minlength="255">{{ old('content') ?: $product->content }}</textarea>
             </div>
@@ -115,5 +130,32 @@
                 characterCounterElement.classList = "text-dark";
             }
         });
+    </script>
+    <script type="text/javascript">
+        //Odstranění obrázku produktu
+        document.addEventListener('DOMContentLoaded', function() {
+            const imagePreviewElement = document.querySelector('#image-preview');
+
+            imagePreviewElement.addEventListener('click', function (event) {
+                if (event.target.classList.contains('remove-image')) {
+                    const imageContainer = event.target.parentNode;
+                    const imagePath = event.target.getAttribute('data-image');
+
+                    removeImage(imageContainer, imagePath);
+                }
+            });
+
+            function removeImage(imageContainer, imagePath) {
+                imageContainer.remove();
+
+                axios.delete('{{-- route('images.delete', $product->id) --}}', { data: { path: imagePath } })
+                    .then(function(response) {
+                        // Obrázek byl úspěšně odstraněn z disku a databáze
+                    })
+                    .catch(function(error) {
+                        // Došlo k chybě při odstraňování obrázku
+                    });
+            }
+        })
     </script>
 @endpush

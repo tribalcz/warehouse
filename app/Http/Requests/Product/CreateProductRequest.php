@@ -33,6 +33,7 @@ class CreateProductRequest extends FormRequest
             'qty' => 'required|numeric',
             'supplier_id' => 'required|exists:suppliers,id',
             'warehouses' => 'required|array|exists:warehouse,id',
+            'images' => 'required',
         ];
     }
 }

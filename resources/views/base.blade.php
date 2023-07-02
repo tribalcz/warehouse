@@ -39,11 +39,11 @@
         </div>
     @endif
 
-        @if(Session::has('error'))
-            <div class="alert alert-danger mb-4">
-                {{ Session::get('error')}}
-            </div>
-        @endif
+    @if(Session::has('error'))
+        <div class="alert alert-danger mb-4">
+            {{ Session::get('error')}}
+        </div>
+    @endif
 
     @yield('content')
 

@@ -71,7 +71,16 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $product->delete();
+        try {
+            $product->warehouses()->detach();
+            $product->images()->each(function ($image) {
+                Storage::disk('public')->delete($image->path);
+                $image->delete();
+            });
+            $product->delete();
+        } catch(\Exception $ex) {
+            return redirect()->back()->with('error', 'Při procesu odstranění produktu došlo k chybě.');
+        }
 
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně smazán.');
     }

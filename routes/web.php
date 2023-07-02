@@ -27,6 +27,10 @@ Route::prefix('products')->group(function () {
     Route::get('/{product}/edit', [\App\Http\Controllers\Warehouse\ProductController::class, 'edit'])->name('products.edit');
     // Aktualizace produktu
     Route::put('/{product}', [\App\Http\Controllers\Warehouse\ProductController::class, 'update'])->name('products.update');
+    // Zobrazení formuláře pro vytvoření varianty produktu
+    Route::get('/{product}/variant', [\App\Http\Controllers\Warehouse\ProductController::class, 'createVariation'])->name('products.variant');
+    // Aktualizace produktu
+    Route::post('/variant', [\App\Http\Controllers\Warehouse\ProductController::class, 'storeVariant'])->name('products.store_variant');
     // Smazání produktu
     Route::delete('/{product}', [\App\Http\Controllers\Warehouse\ProductController::class, 'destroy'])->name('products.destroy');
 });

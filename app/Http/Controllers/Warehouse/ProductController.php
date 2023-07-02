@@ -29,12 +29,10 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request)
     {
         $validatedData = $request->validated();
-        $databaseData = $validatedData;
-        unset($databaseData['images']);
+        $data = $validatedData;
+        unset($data['images']);
 
-        //dd($request->file('images'));
-
-        $product = Product::create($databaseData);
+        $product = Product::create($data);
         $product->warehouses()->sync($request->input('warehouses', []));
 
         if ($request->hasFile('images')) {

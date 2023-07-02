@@ -16,6 +16,7 @@
                 <th>Cena</th>
                 <th>Skladovost</th>
                 <th>Sklad</th>
+                <th>Dodavatel</th>
                 <th></th>
             </tr>
             </thead>
@@ -28,11 +29,14 @@
                     <td>{{ $product->qty ?? 0}}</td>
                     <td>
                         @foreach($product->getAvailableWarehouses() as $warehouse)
-                            {{ $warehouse->address }}
+                            {{ $warehouse->address }} <br />
                         @endforeach
                     </td>
                     <td>
-                        @if(Route::has('products.variant'))
+                        {{ $product->supplier->name }}
+                    </td>
+                    <td>
+                        @if(Route::has('products.variant') && !$product->isVariant)
                             <a href="{{ route('products.variant', $product->id) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-clone"></i>
                             </a>

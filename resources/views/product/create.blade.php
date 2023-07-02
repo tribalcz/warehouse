@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Vytvořit produkt</h2>
-        <form action="{{ route('products.store') }}" method="POST">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Název:</label>
@@ -64,8 +64,12 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="images">Obrázky produktu</label>
+                <input type="file" class="form-control" id="images" name="images[]" multiple>
+            </div>
+            <div class="form-group">
                 <label for="content">Popis produktu</label>
-                <textarea name="content" id="content" class="form-control" rows="8" minlength="255">{{ old('content') ?: $product->content }}</textarea>
+                <textarea name="content" id="content" class="form-control" rows="8" minlength="255">{{ old('content') }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-2">Vytvořit</button>
         </form>

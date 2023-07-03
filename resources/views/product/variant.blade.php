@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Vytváření varianty produktu - {{ $product->title }}</h2>
-        <form action="{{ route('products.store_variant') }}" method="POST">
+        <form action="{{ route('products.store_variant') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Název:</label>
@@ -66,6 +66,10 @@
                         </option>
                     @endforeach
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="images">Obrázky produktu</label>
+                <input type="file" class="form-control" id="images" name="images[]" multiple>
             </div>
             <div class="form-group">
                 <label for="content">Popis produktu</label>

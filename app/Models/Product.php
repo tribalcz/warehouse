@@ -39,6 +39,6 @@ class Product extends Model
 
     public function getImagesPaths()
     {
-        return $this->images()->pluck('path');
+        return $this->images()->get();
     }
 }

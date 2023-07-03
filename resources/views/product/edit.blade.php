@@ -75,10 +75,10 @@
             <div class="form-group">
                 <label for="images">Obrázky produktu</label>
                 <div id="image-preview">
-                    @foreach($product->getImagesPaths() as $path)
+                    @foreach($product->getImagesPaths() as $image)
                         <div>
-                            <img src="{{ asset('storage/' . $path) }}" alt="Product Image" style="width: 100px; height: 100px;">
-                            <button type="button" class="btn btn-danger btn-sm remove-image" data-image="{{ $path }}">Odstranit</button><br />
+                            <img src="{{ asset('storage/' . $image->path) }}" alt="Product Image {{ $image->id }}" style="width: 100px; height: 100px;">
+                            <button type="button" class="btn btn-danger btn-sm remove-image" data-image="{{ $image->path }}">Odstranit</button><br />
                         </div>
                     @endforeach
                 </div>

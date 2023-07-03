@@ -55,7 +55,15 @@ class WarehouseController extends Controller
 
     public function destroy(Warehouse $warehouse)
     {
-        $warehouse->delete();
+        try {
+            if($warehouse->products()->exists()) {
+                return redirect()->back()->with('error', 'Sklad není možné odstranit. Ve skladu jsou evidovány produkty');
+            }
+
+            $warehouse->delete();
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error', 'Při procesu odstranění skladu došlo k chybě');
+        }
 
         return redirect()->route('warehouses.index')->with('success', 'Sklad byl úspěšně smazán.');
     }

@@ -45,7 +45,15 @@ class SupplierController extends Controller
 
     public function destroy(Supplier $supplier)
     {
-        $supplier->delete();
+        try {
+            if($supplier->warehouses()->exists()) {
+                return redirect()->back()->with('error', 'Dodavatele není možné odstranit, dodavatel je přiřazen k některému ze skladů');
+            }
+
+            $supplier->delete();
+        } catch(\Exception $ex) {
+            return redirect()->back()->with('error', 'Při procesu odstranění dodavatele došlo k chybě');
+        }
 
         return redirect()->route('suppliers.index')->with('success', 'Dodavatel byl úspěšně smazán.');
     }

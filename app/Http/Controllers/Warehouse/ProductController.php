@@ -84,11 +84,24 @@ class ProductController extends Controller
     public function storeVariant(CreateProductRequest $request)
     {
         $validatedData = $request->validated();
-
         $validatedData['isVariant'] = 1;
+        $data = $validatedData;
+        unset($data['images']);
 
-        $product = Product::create($validatedData);
+        $product = Product::create($data);
         $product->warehouses()->sync($request->input('warehouses', []));
+
+        if($request->hasFile('images')) {
+            $imageIds = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('product_images', 'public');
+                $imageModel = new Image();
+                $imageModel->path = $path;
+                $imageModel->save();
+                $imageIds[] = $imageModel->id;
+            }
+            $product->images()->sync($imageIds);
+        }
 
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně vytvořen.');
     }

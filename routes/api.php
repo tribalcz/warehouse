@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::delete('/products/{productId}/images/{imagePath}', [\App\Http\Controllers\API\ProductController::class, 'deleteImage'])->name('api.products.images.delete');

@@ -68,11 +68,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="images">Obrázky produktu</label>
+                <label for="images">Obrázky produktu:</label>
                 <input type="file" class="form-control" id="images" name="images[]" multiple>
             </div>
             <div class="form-group">
-                <label for="content">Popis produktu</label>
+                <label for="content">Popis produktu:</label>
                 <textarea name="content" id="content" class="form-control" rows="8" minlength="255">{{ old('content') ?: $product->content }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-2">Uložit</button>

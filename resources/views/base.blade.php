@@ -45,6 +45,12 @@
         </div>
     @endif
 
+        @if(Session::has('success'))
+            <div class="alert alert-success mb-4">
+                {{ Session::get('success')}}
+            </div>
+        @endif
+
     @yield('content')
 
     <footer class="pt-4 my-md-5 border-top">

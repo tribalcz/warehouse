@@ -64,6 +64,22 @@ class ProductController extends Controller
         $product->update($validatedData);
         $product->warehouses()->sync($request->input('warehouses', []));
 
+        $existingImages = $product->images->pluck('id')->toArray();
+
+        if ($request->hasFile('images')) {
+            $newImageIds = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('product_images', 'public');
+                $imageModel = new Image();
+                $imageModel->path = $path;
+                $imageModel->save();
+                $newImageIds[] = $imageModel->id;
+            }
+            $product->images()->attach($newImageIds);
+        }
+
+        $product->images()->syncWithoutDetaching($existingImages);
+
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně upraven.');
     }
 

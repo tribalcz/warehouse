@@ -3,6 +3,8 @@
 @section('content')
     <div class="container">
         <h2>Upravit produkt - {{$product->name}}</h2>
+        <div class="data-success"></div>
+        <div class="data-error"></div>
         <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -69,11 +71,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="images">Obrázky produktu</label>
+                <label for="images">Obrázky produktu:</label>
                 <input type="file" class="form-control" id="images" name="images[]" multiple>
             </div>
             <div class="form-group">
-                <label for="images">Obrázky produktu</label>
+                <label for="images">Obrázky produktu:</label>
                 <div id="image-preview">
                     @foreach($product->getImagesPaths() as $image)
                         <div>
@@ -84,7 +86,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="content">Popis produktu</label>
+                <label for="content">Popis produktu:</label>
                 <textarea name="content" id="content" class="form-control" rows="8" minlength="255">{{ old('content') ?: $product->content }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-2">Uložit</button>
@@ -140,21 +142,43 @@
                 if (event.target.classList.contains('remove-image')) {
                     const imageContainer = event.target.parentNode;
                     const imagePath = event.target.getAttribute('data-image');
+                    const productId = '{{ $product->id }}';
 
-                    removeImage(imageContainer, imagePath);
+                    removeImage(imageContainer, imagePath, productId);
                 }
             });
 
-            function removeImage(imageContainer, imagePath) {
-                imageContainer.remove();
+            function removeImage(imageContainer, imagePath, productId) {
 
-                axios.delete('{{-- route('images.delete', $product->id) --}}', { data: { path: imagePath } })
+                axios.delete(`/api/products/${productId}/images/${imagePath.replace('product_images/', '')}`)
                     .then(function(response) {
-                        // Obrázek byl úspěšně odstraněn z disku a databáze
+                        const successMessage = response.data.message;
+                        showSuccessMessage(successMessage);
+                        imageContainer.remove();
                     })
                     .catch(function(error) {
-                        // Došlo k chybě při odstraňování obrázku
+                        const errorMessage = error.response.data.message;
+                        console.log(errorMessage);
+                        showErrorMessage(errorMessage);
                     });
+            }
+
+            function showSuccessMessage(message) {
+                const successDiv = document.querySelector('.data-success');
+                successDiv.innerHTML = '<div class="alert alert-success mb-4">' + message + '</div>';
+
+                setTimeout(function () {
+                    successDiv.innerHTML = '';
+                }, 5000);
+            }
+
+            function showErrorMessage(message) {
+                const successDiv = document.querySelector('.data-error');
+                successDiv.innerHTML = '<div class="alert alert-danger mb-4">' + message + '</div>';
+
+                setTimeout(function () {
+                    successDiv.innerHTML = '';
+                }, 5000);
             }
         })
     </script>

@@ -167,6 +167,8 @@
                 const successDiv = document.querySelector('.data-success');
                 successDiv.innerHTML = '<div class="alert alert-success mb-4">' + message + '</div>';
 
+                successDiv.firstChild.classList.add('sticky-message');
+
                 setTimeout(function () {
                     successDiv.innerHTML = '';
                 }, 5000);
@@ -175,6 +177,8 @@
             function showErrorMessage(message) {
                 const successDiv = document.querySelector('.data-error');
                 successDiv.innerHTML = '<div class="alert alert-danger mb-4">' + message + '</div>';
+
+                successDiv.firstChild.classList.add('sticky-message');
 
                 setTimeout(function () {
                     successDiv.innerHTML = '';

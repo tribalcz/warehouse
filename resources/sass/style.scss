@@ -41,3 +41,11 @@
     border-style: solid;
     border-color: transparent transparent black transparent;
 }
+
+.sticky-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}

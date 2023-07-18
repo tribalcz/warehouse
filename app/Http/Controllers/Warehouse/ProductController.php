@@ -36,15 +36,7 @@ class ProductController extends Controller
         $product->warehouses()->sync($request->input('warehouses', []));
 
         if ($request->hasFile('images')) {
-            $imageIds = [];
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('product_images', 'public');
-                $imageModel = new Image();
-                $imageModel->path = $path;
-                $imageModel->save();
-                $imageIds[] = $imageModel->id;
-            }
-            $product->images()->sync($imageIds);
+            $this->saveImages($product, $request->file('images'));
         }
 
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně vytvořen.');
@@ -108,15 +100,7 @@ class ProductController extends Controller
         $product->warehouses()->sync($request->input('warehouses', []));
 
         if($request->hasFile('images')) {
-            $imageIds = [];
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('product_images', 'public');
-                $imageModel = new Image();
-                $imageModel->path = $path;
-                $imageModel->save();
-                $imageIds[] = $imageModel->id;
-            }
-            $product->images()->sync($imageIds);
+            $this->saveImages($product, $request->file('images'));
         }
 
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně vytvořen.');
@@ -136,5 +120,20 @@ class ProductController extends Controller
         }
 
         return redirect()->route('products.index')->with('success', 'Produkt byl úspěšně smazán.');
+    }
+
+    private function saveImages(Product $product, array $images)
+    {
+        $imageIds = [];
+        foreach ($images as $image) {
+            $path = $image->store('product_images', 'public');
+            $imageModel = new Image();
+            $imageModel->path = $path;
+            $imageModel->save();
+            $imageIds[] = $imageModel->id;
+        }
+        $product->images()->sync($imageIds);
+
+
     }
 }

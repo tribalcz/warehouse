@@ -25,6 +25,9 @@
         @if(Route::has('warehouses.index'))
             <a class="p-2 text-dark" href="{{ route('warehouses.index') }}">Přehled skladů</a>
         @endif
+        @if(Route::has('manufacturers.index'))
+            <a class="p-2 text-dark" href="{{ route('manufacturers.index') }}">Přehled výrobců</a>
+        @endif
     </nav>
 </div>
 

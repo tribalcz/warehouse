@@ -32,4 +32,23 @@ class ProductController extends Controller
 
         return response()->json(['message' => 'Obrázek byl úspěšně odstraněn']);
     }
+    //TODO: implementovat js do pohledu a routy
+    public function increaseStock(Request $request, $productId)
+    {
+        try {
+            $product = Product::findOrFail($productId);
+
+            $request->validate([
+                'qty' => 'required|integer|min:1',
+            ]);
+
+            $quantityToAdd = $request->input('qty');
+            $product->qty += $quantityToAdd;
+            $product->save();
+        } catch (\Exception $ex) {
+            return response()->json(['message' => $ex->getMessage()]);
+        }
+
+        return response()->json(['message' => 'Počet kusů na skladě byl navýšen o '. $quantityToAdd]);
+    }
 }

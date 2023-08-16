@@ -36,7 +36,7 @@ class UpdateProductRequest extends FormRequest
             'supplier_id' => 'required|exists:suppliers,id',
             'manufacturer_id' => 'required|exists:suppliers,id',
             'warehouses' => 'required|array|exists:warehouse,id',
-            'images' => 'required|array',
+            'images' => 'array',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ];
     }

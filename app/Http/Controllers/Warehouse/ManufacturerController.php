@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Manufacturer\CreateManufacturerRequest;
 use App\Http\Requests\Manufacturer\EditManufacturerRequest;
 use App\Models\Manufacturer;
-use Illuminate\Http\Request;
 
 class ManufacturerController extends Controller
 {

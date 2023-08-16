@@ -44,6 +44,6 @@ class Product extends Model
 
     public function manufacturers()
     {
-        return $this->belongsToMany(Manufacturer::class);
+        return $this->belongsToMany(Manufacturer::class, 'product_manufacturer');
     }
 }

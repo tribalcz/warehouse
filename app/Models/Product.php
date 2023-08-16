@@ -41,4 +41,9 @@ class Product extends Model
     {
         return $this->images()->get();
     }
+
+    public function manufacturers()
+    {
+        return $this->belongsToMany(Manufacturer::class);
+    }
 }

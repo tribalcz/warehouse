@@ -32,6 +32,7 @@ class CreateProductRequest extends FormRequest
             'ean' => 'nullable|min:8|max:14',
             'qty' => 'required|numeric',
             'supplier_id' => 'required|exists:suppliers,id',
+            'manufacturer_id' => 'required|exists:manufacturers,id',
             'warehouses' => 'required|array|exists:warehouse,id',
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',

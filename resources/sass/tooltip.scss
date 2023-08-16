@@ -1,0 +1,42 @@
+.napoveda {
+    background: #771b1b;
+    padding: 15px;
+    border-radius: 10px;
+    width: 250px;
+    height: 140px;
+    clip-path: circle(10% at 10% 20%);
+    transition: all .5s ease-in-out;
+    cursor: pointer;
+    margin: 20px 0px;
+}
+
+.napoveda:hover {
+    clip-path: circle(75%);
+    background: #77b1b1;
+}
+
+.napoveda h1 {
+    text-align: center;
+    color: white;
+    margin: 0px;
+}
+
+.napoveda p {
+    text-align: center;
+    color: white;
+    font-size: .8rem;
+}
+
+.napoveda span {
+    float: left;
+    color: white;
+    font-weight: bold;
+    transition: color .5s;
+    position: relative;
+    margin-top: 4%;
+    margin-left: 4%;
+}
+
+.napoveda:hover span {
+    display: none;
+}

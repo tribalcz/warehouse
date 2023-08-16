@@ -48,8 +48,18 @@
                 <input type="number" class="form-control" id="qty" name="qty" value="{{ old('qty') ?: $product->qty }}" required>
             </div>
             <div class="form-group">
+                <label for="manufacturer_id">Výrobce:</label>
+                <select class="form-control" id="manufacturer_id" name="manufacturer_id" required>
+                    <option value="" selected>Vyberte výrobce</option>
+                    @foreach($manufacturers as $manufacturer)
+                        <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="supplier_id">Dodavatel:</label>
                 <select class="form-control" id="supplier_id" name="supplier_id" required>
+                    <option value="" selected>Vyberte dodavatele</option>
                     @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->id }}" {{ $product->supplier_id == $supplier->id ? 'selected' : '' }}>
                             {{ $supplier->name }}

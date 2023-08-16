@@ -64,3 +64,18 @@ Route::prefix('warehouses')->group(function () {
     // Smazání skladu
     Route::delete('/{warehouse}', [\App\Http\Controllers\Warehouse\WarehouseController::class, 'destroy'])->name('warehouses.destroy');
 });
+
+// Výrobce
+Route::prefix('manufacturers')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Warehouse\ManufacturerController::class, 'index'])->name('manufacturers.index');
+    //Zobrazení formuláře pro vytvoření výrobce
+    Route::get('/create', [\App\Http\Controllers\Warehouse\ManufacturerController::class, 'create'])->name('manufacturers.create');
+    //Vytvoření nového výrobce
+    Route::post('/', [\App\Http\Controllers\Warehouse\ManufacturerController::class, 'store'])->name('manufacturers.store');
+    //Zobrazení formuláře pro úpravu výrobce
+    Route::get('/{manufacturer}/edit', [\App\Http\Controllers\Warehouse\ManufacturerController::class, 'edit'])->name('manufacturers.edit');
+    // Aktualizace výrobce
+    Route::put('/{manufacturer}', [\App\Http\Controllers\Warehouse\ManufacturerController::class, 'update'])->name('manufacturers.update');
+    // Smazání výrobce
+    Route::delete('/{manufacturer}', [\App\Http\Controllers\Warehouse\ManufacturerController::class, 'destroy'])->name('manufacturers.destroy');
+});

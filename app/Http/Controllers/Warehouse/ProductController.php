@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Image;
+use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\Warehouse;
@@ -21,9 +22,10 @@ class ProductController extends Controller
 
     public function create()
     {
+        $manufacturers = Manufacturer::select('id', 'name')->get();
         $suppliers = Supplier::select('id', 'name')->get();
         $warehouses = Warehouse::select('id', 'address')->get();
-        return view('product.create', compact('suppliers', 'warehouses'));
+        return view('product.create', compact('suppliers', 'warehouses', 'manufacturers'));
     }
 
     public function store(CreateProductRequest $request)
@@ -34,6 +36,7 @@ class ProductController extends Controller
 
         $product = Product::create($data);
         $product->warehouses()->sync($request->input('warehouses', []));
+        $product->manufacturers()->sync($request->input('manufacturer_id'));
 
         if ($request->hasFile('images')) {
             $this->saveImages($product, $request->file('images'));
@@ -44,9 +47,10 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        $manufacturers = Manufacturer::select('id', 'name')->get();
         $suppliers = Supplier::select('id', 'name')->get();
         $warehouses = Warehouse::select('id', 'address')->get();
-        return view('product.edit', compact('product', 'suppliers', 'warehouses'));
+        return view('product.edit', compact('product', 'suppliers', 'warehouses', 'manufacturers'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -55,6 +59,7 @@ class ProductController extends Controller
 
         $product->update($validatedData);
         $product->warehouses()->sync($request->input('warehouses', []));
+        $product->manufacturers()->sync($request->input('manufacturer_id'));
 
         $existingImages = $product->images->pluck('id')->toArray();
 
@@ -82,10 +87,11 @@ class ProductController extends Controller
         unset($product->name);
         unset($product->id);
 
+        $manufacturers = Manufacturer::select('id', 'name')->get();
         $suppliers = Supplier::select('id', 'name')->get();
         $warehouses = Warehouse::select('id', 'address')->get();
 
-        return view('product.variant', compact('product', 'suppliers', 'warehouses'));
+        return view('product.variant', compact('product', 'suppliers', 'warehouses', 'manufacturers'));
 
     }
 
@@ -98,6 +104,7 @@ class ProductController extends Controller
 
         $product = Product::create($data);
         $product->warehouses()->sync($request->input('warehouses', []));
+        $product->manufacturers()->sync($request->input('manufacturer_id'));
 
         if($request->hasFile('images')) {
             $this->saveImages($product, $request->file('images'));

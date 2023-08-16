@@ -79,3 +79,18 @@ Route::prefix('manufacturers')->group(function () {
     // Smazání výrobce
     Route::delete('/{manufacturer}', [\App\Http\Controllers\Warehouse\ManufacturerController::class, 'destroy'])->name('manufacturers.destroy');
 });
+
+//kategorie
+Route::prefix('categories')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Warehouse\CategoryController::class, 'index'])->name('categories.index');
+    //Zobrazení formuláře pro vytvoření kategorie
+    Route::get('/create', [\App\Http\Controllers\Warehouse\CategoryController::class, 'create'])->name('categories.create');
+    //Vytvoření nové kategorie
+    Route::post('/', [\App\Http\Controllers\Warehouse\CategoryController::class, 'store'])->name('categories.store');
+    //Zobrazení formuláře pro úpravu  kategorie
+    Route::get('/{category}/edit', [\App\Http\Controllers\Warehouse\CategoryController::class, 'edit'])->name('categories.edit');
+    //Aktualizace kategorie
+    Route::put('/{category}', [\App\Http\Controllers\Warehouse\CategoryController::class, 'update'])->name('categories.update');
+    //Smazání kategorie
+    Route::delete('/', [\App\Http\Controllers\Warehouse\CategoryController::class, 'destroy'])->name('categories.destroy');
+});

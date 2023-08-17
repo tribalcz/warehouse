@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Warehouse;
 use Closure;
@@ -21,13 +22,21 @@ class CheckDependencies
         {
             $supplierCount = Supplier::count();
             $warehouseCount = Warehouse::count();
+            $categoryCount = Category::count();
 
+            //pokud neexistuje žádný dodavatel...
             if ($request->is('warehouses/create') && $supplierCount === 0) {
                 return redirect()->route('dashboard')->with('error', 'Nejprve vytvořte dodavatele.');
             }
 
+            //Pokud neexistuje žádný sklad...
             if ($request->is('products/create') && $warehouseCount === 0) {
                 return redirect()->route('dashboard')->with('error', 'Nejprve vytvořte sklad.');
+            }
+
+            //Pokud neexistuje žádná kategorie...
+            if ($request->is('products/create') && $categoryCount === 0) {
+                return redirect()->route('dashboard')->with('error', 'Nejprve vytvořte kategorii');
             }
         }
         return $next($request);

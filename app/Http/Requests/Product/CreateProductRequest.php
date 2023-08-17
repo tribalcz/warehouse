@@ -33,6 +33,7 @@ class CreateProductRequest extends FormRequest
             'qty' => 'required|numeric',
             'supplier_id' => 'required|exists:suppliers,id',
             'manufacturer_id' => 'required|exists:manufacturers,id',
+            'category_id' => 'required|array|exists:categories,id',
             'warehouses' => 'required|array|exists:warehouse,id',
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',

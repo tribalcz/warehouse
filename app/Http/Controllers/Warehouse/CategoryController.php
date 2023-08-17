@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Warehouse;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -20,17 +22,15 @@ class CategoryController extends Controller
         return view('category.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'parent_category' => 'nullable|exists:categories,id',
-        ]);
+        $validatedData = $request->validated();
+        $data = [
+            'name' => $validatedData['name'],
+            'category_id' => $validatedData['parent_category'],
+        ];
 
-        $category = new Category();
-        $category->name = $validatedData['name'];
-        $category->category_id = $validatedData['parent_category'];
-        $category->save();
+        $category = Category::create($data);
 
         return redirect()->route('categories.index')->with('success', 'Kategorie byla úspěšně vytvořena.');
     }
@@ -41,23 +41,27 @@ class CategoryController extends Controller
         return view('category.edit', compact('category', 'categories'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|unique:categories,name,' . $category->id,
-            'parent_category' => 'nullable|exists:categories,id',
-        ]);
+        $validatedData = $request->validated();
+        $data = [
+            'name' => $validatedData['name'],
+            'category_id' => $validatedData['parent_category'],
+        ];
 
-        $category->name = $validatedData['name'];
-        $category->category_id = $validatedData['parent_category'];
-        $category->save();
+        $category->update($data);
 
         return redirect()->route('categories.index')->with('success', 'Kategorie byla úspěšně upravena.');
     }
 
     public function destroy(Category $category)
     {
-        $category->delete();
+
+        try {
+            $category->delete();
+        } catch(\Exception $ex) {
+            return redirect()->back()->with('error', 'Při procesu odstranění kategorie došlo k chybě.'.$ex->getMessage());
+        }
         return redirect()->route('categories.index')->with('success', 'Kategorie byla úspěšně odstraněna.');
     }
 }

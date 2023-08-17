@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label for="manufacturer_id">Výrobce:</label>
                 <select class="form-control" id="manufacturer_id" name="manufacturer_id" required>
-                    <option value="" selected>Vyberte výrobce</option>
+                    <option value="" selected>-- Vyberte výrobce --</option>
                     @foreach($manufacturers as $manufacturer)
                         <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
                     @endforeach
@@ -59,7 +59,7 @@
             <div class="form-group">
                 <label for="supplier_id">Dodavatel:</label>
                 <select class="form-control" id="supplier_id" name="supplier_id" required>
-                    <option value="" selected>Vyberte dodavatele</option>
+                    <option value="" selected>-- Vyberte dodavatele --</option>
                     @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                     @endforeach
@@ -72,6 +72,10 @@
                         <option value="{{ $warehouse->id }}">{{ $warehouse->address }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Kategorie:</label>
+                @include('category_select', ['categories' => $categories])
             </div>
             <div class="form-group">
                 <label for="images">Obrázky produktu:</label>

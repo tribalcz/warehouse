@@ -28,6 +28,9 @@
         @if(Route::has('manufacturers.index'))
             <a class="p-2 text-dark" href="{{ route('manufacturers.index') }}">Přehled výrobců</a>
         @endif
+        @if(Route::has('categories.index'))
+            <a class="p-2 text-dark" href="{{ route('categories.index') }}">Přehled kategorií</a>
+        @endif
     </nav>
 </div>
 

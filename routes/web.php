@@ -92,5 +92,5 @@ Route::prefix('categories')->group(function () {
     //Aktualizace kategorie
     Route::put('/{category}', [\App\Http\Controllers\Warehouse\CategoryController::class, 'update'])->name('categories.update');
     //Smazání kategorie
-    Route::delete('/', [\App\Http\Controllers\Warehouse\CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::delete('/{category}', [\App\Http\Controllers\Warehouse\CategoryController::class, 'destroy'])->name('categories.destroy');
 });
